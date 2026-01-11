@@ -11,18 +11,40 @@ import (
 	"strings"
 )
 
+// URL for font files
+const asciiUrlStandard = "https://platform.zone01.gr/api/content/root/public/subjects/ascii-art/standard.txt"
+const asciiUrlShadow = "https://platform.zone01.gr/api/content/root/public/subjects/ascii-art/shadow.txt"
+const asciiUrlThinkertoy = "https://platform.zone01.gr/api/content/root/public/subjects/ascii-art/thinkertoy.txt"
+
+// File names
+const fontStandard = "standard.txt"
+const fontShadow = "shadow.txt"
+const fontThinkertoy = "thinkertoy.txt"
+
+// Local path to save font files
+var fontPath = "internal/utilities/fonts/"
+
+// Slice of Link and file data
+var urlList = []string{asciiUrlStandard, asciiUrlShadow, asciiUrlThinkertoy}
+var fileNames = []string{fontStandard, fontShadow, fontThinkertoy}
+
 // Make sure the file exist if not it downloads the file to the project
-func EnsureFile(filename, url string) error {
-	if FileExists(filename) {
-		return nil
-	}
+func EnsureFontFiles() error {
+	for index, file := range urlList {
+		if FileExists(file) {
+			continue
+		}
 
-	data, err := DownloadFile(url)
-	if err != nil {
-		return err
-	}
+		data, err := DownloadFile(file)
+		if err != nil {
+			return err
+		}
 
-	return SaveFile(filename, data)
+		if SaveFile(fontPath+fileNames[index], data) != nil {
+			return err
+		}
+	}
+	return nil
 }
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
