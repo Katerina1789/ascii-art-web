@@ -1,4 +1,4 @@
-package ascii
+package fontHandler
 
 import (
 	"net/http"
