@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Ascii-Art-Web</title>
   <link rel="stylesheet" href="style.css?v=2">
 </head>
+
 <body>
 
-  <h1>{{.Welcome}}</h1>
-
-  <form class=card>
+  <form id="ascii-form" class=card>
     <h2>Create Banner Message</h2>
 
     <label for="message">Text</label>
@@ -37,5 +37,12 @@
     <button type="submit">generate</button>
   </form>
 
+  <div class="card" style="margin-top: 20px;">
+    <h2>Output</h2>
+    <pre id="output-box"></pre>
+  </div>
+
+  <script src="/script.js"></script>
 </body>
+
 </html>
