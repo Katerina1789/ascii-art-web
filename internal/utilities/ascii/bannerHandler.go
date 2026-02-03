@@ -1,7 +1,8 @@
 /*
-Ensures that font file is ready for use and load the file else it downloads this file
+Ensures that font files are ready for use and loads the files,
+otherwise it downloads them.
 */
-package fontHandler
+package ascii
 
 import (
 	"fmt"
@@ -12,39 +13,39 @@ import (
 	"strings"
 )
 
-// Font struct for creating any pair you want with the filename and the Url that you get this file
+// Font struct for creating any pair you want with the filename
+// and the URL from which you get this file.
 type FontResource struct {
 	Name string
 	Url  string
 }
 
-// URL for font files
+// URLs for font files
 const asciiUrlStandard = "https://platform.zone01.gr/api/content/root/public/subjects/ascii-art/standard.txt"
 const asciiUrlShadow = "https://platform.zone01.gr/api/content/root/public/subjects/ascii-art/shadow.txt"
 const asciiUrlThinkertoy = "https://platform.zone01.gr/api/content/root/public/subjects/ascii-art/thinkertoy.txt"
 
-// Font Slice to iterate in order to check if the fonts exist
+// Font slice to iterate in order to check if the fonts exist
 var fonts = []FontResource{
 	{Name: "standard.txt", Url: asciiUrlStandard},
 	{Name: "shadow.txt", Url: asciiUrlShadow},
 	{Name: "thinkertoy.txt", Url: asciiUrlThinkertoy},
 }
 
-// Local path to save font files
-// Note: filepath.Join handles the separators, so we don't strictly need the trailing "/" here anymore.
-var fontPath = "internal/ascii/banners"
+// Local path to save font files (relative to project root)
+var fontPath = "internal/utilities/ascii/banners"
 
-// Make sure the file exist if not it downloads the file to the project
+// Make sure the files exist; if not, download them into the project
 func EnsureFontFiles() error {
 
-	//Create the directory if it doesn't exist (Self-healing)
-	// 0755 is standard permission: Owner can write/read/execute, others can read/execute.
+	// Create the directory if it doesn't exist (self-healing)
+	// 0755 is standard permission: owner can write/read/execute, others can read/execute.
 	if err := os.MkdirAll(fontPath, 0755); err != nil {
 		return fmt.Errorf("could not create font directory: %w", err)
 	}
 
 	for _, font := range fonts {
-		//Construct the safe, full path once
+		// Construct the safe, full path once
 		fullPath := filepath.Join(fontPath, font.Name)
 
 		// Check the specific file path, not just the name
@@ -59,20 +60,20 @@ func EnsureFontFiles() error {
 		}
 
 		// Save to the same path we checked
-		err = SaveFile(fullPath, data)
-		if err != nil {
+		if err := SaveFile(fullPath, data); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
+// Check if a file exists at the given path
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil
 }
 
-// downloads ascii font file
+// Downloads ASCII font file
 func DownloadFile(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -87,8 +88,9 @@ func DownloadFile(url string) ([]byte, error) {
 	return io.ReadAll(resp.Body)
 }
 
+// Saves the downloaded file to disk
 func SaveFile(path string, data []byte) error {
-	// 0644: Owner can read/write, everyone else can read.
+	// 0644: owner can read/write, everyone else can read.
 	return os.WriteFile(path, data, 0644)
 }
 
