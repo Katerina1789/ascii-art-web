@@ -57,17 +57,27 @@
             <button type="submit" class="btn">Generate Art</button>
         </form>
 
-        {{if .Result}}
-        <div class="result-container" id="resultContainer">
-            <div class="result-header">
-                <h2>Generated Output</h2>
-                <button class="btn-copy" id="copyBtn">Copy to Clipboard</button>
-            </div>
-            <div class="result-content">
-                <pre id="asciiResult">{{.Result}}</pre>
-            </div>
+             {{if .Result}}
+<div class="result-container" id="resultContainer">
+    <div class="result-header">
+        <h2>Generated Output</h2>
+
+        <div class="result-actions">
+            <button class="btn-copy" id="copyBtn">Copy to Clipboard</button>
+
+            <form action="/export" method="POST" style="display:inline;">
+                <input type="hidden" name="ascii" value="{{.Result}}">
+                <button class="btn-copy">Download as .txt</button>
+            </form>
         </div>
-        {{end}}
+    </div>
+
+    <div class="result-content">
+        <pre id="asciiResult">{{.Result}}</pre>
+    </div>
+</div>
+{{end}}
+
     </div>
 
     <script src="/static/fireworkEffect.js"></script>
