@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"strconv"
 )
 
 // HandleHome serves the main page (GET /).
@@ -74,4 +75,27 @@ func HandleAsciiArt(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tmpl.Execute(w, data)
+}
+
+// ExportAsciiArt handles file download (POST /export).
+func ExportAsciiArt(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		Send400(w, "Only POST method is allowed")
+		return
+	}
+
+	asciiResult := r.FormValue("ascii")
+	if asciiResult == "" {
+		Send400(w, "No ASCII art to export")
+		return
+	}
+
+	data := []byte(asciiResult)
+
+	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
+	w.Header().Set("Content-Disposition", "attachment; filename=\"ascii-art.txt\"")
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }

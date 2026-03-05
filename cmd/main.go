@@ -10,15 +10,17 @@ import (
 func main() {
 	// Ensure all banner font files exist before starting the server
 	if ascii.EnsureFontFiles() != nil {
-		fmt.Printf("Error retrieving the files")
+		fmt.Println("Error retrieving the files")
 		return
 	}
-
 	// Route: Home page (GET /)
 	http.HandleFunc("/", server.HandleHome)
 
 	// Route: ASCII Art generation (POST /ascii-art)
 	http.HandleFunc("/ascii-art", server.HandleAsciiArt)
+
+	// Route: Export ASCII Art (POST /export)
+	http.HandleFunc("/export", server.ExportAsciiArt)
 
 	// Route: Static assets (CSS) under /static/
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
@@ -28,5 +30,4 @@ func main() {
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Println("Server error:", err)
 	}
-
 }
