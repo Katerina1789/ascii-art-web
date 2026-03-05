@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII Art Generator | Stylize</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Optional: Add Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="effects">
+
+        <canvas id="gridCanvas"></canvas>
+        <canvas id="fireworksCanvas"></canvas>
+    </div>
+
+
+
+    <div class="container">
+        <header>
+            <h1>ASCII Art Generator</h1>
+            <p class="subtitle">Convert your text into stunning ASCII masterpieces instantly.</p>
+        </header>
+
+        <form action="/ascii-art" method="POST" class="form">
+            <div class="form-group">
+                <label for="text">Your Message</label>
+                <textarea id="text" name="text" placeholder="Type something amazing here..." required
+                    autofocus></textarea>
+            </div>
+
+            <div class="form-group centered">
+                <label>Banner Style</label>
+                <div class="radio-group centered">
+                    <label class="radio-option">
+                        <input type="radio" name="banner" value="standard" checked>
+                        <span>Standard</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="banner" value="shadow">
+                        <span>Shadow</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="banner" value="thinkertoy">
+                        <span>Thinkertoy</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Background Effect selection removed as per request to keep only fireworks -->
+
+            <button type="submit" class="btn">Generate Art</button>
+        </form>
+
+        {{if .Result}}
+        <div class="result-container" id="resultContainer">
+            <div class="result-header">
+                <h2>Generated Output</h2>
+                <button class="btn-copy" id="copyBtn">Copy to Clipboard</button>
+            </div>
+            <div class="result-content">
+                <pre id="asciiResult">{{.Result}}</pre>
+            </div>
+        </div>
+        {{end}}
+    </div>
+
+    <script src="/static/fireworkEffect.js"></script>
+</body>
+
+</html>
