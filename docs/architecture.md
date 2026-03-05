@@ -191,18 +191,6 @@ HTTP request handlers for the web application.
 
 ---
 
-### **templates/error.html**
-Error page template that displays HTTP error information with consistent styling.
-
-**Features:**
-- Displays `{{.StatusCode}}` (400, 404, or 500)
-- Displays `{{.Message}}` with error description
-- "Go Home" button linking back to `/`
-- Consistent styling with main page
-- Responsive design
-
----
-
 ### **templates/index.html**
 Main page template containing the input form, result display area, and interactive effects.
 
@@ -218,21 +206,15 @@ Main page template containing the input form, result display area, and interacti
 
 ---
 
-### **static/fireworkEffect.js**
-Canvas-based JavaScript animation system for interactive background effects.
+### **templates/error.html**
+Error page template that displays HTTP error information with consistent styling.
 
 **Features:**
-- **Multi-Canvas System**: Separate canvases for grid, warp, and fireworks
-- **Particle Physics**: Realistic firework explosions with gravity
-- **Interactive Elements**: Click-to-launch fireworks
-- **Auto-Launch**: Automatic fireworks every second
-- **Grid Animation**: Animated background grid with color fills
-- **Performance Optimized**: Efficient rendering and cleanup
-
-**Classes:**
-- `Firework` - Individual firework rockets
-- `Particle` - Explosion particles with physics
-- `GridEffect` - Background grid animation
+- Displays `{{.StatusCode}}` (400, 404, or 500)
+- Displays `{{.Message}}` with error description
+- "Go Home" button linking back to `/`
+- Consistent styling with main page
+- Responsive design
 
 ---
 
@@ -254,6 +236,24 @@ Advanced stylesheet implementing modern design patterns and responsive layout.
 - `.effect-card` - Interactive banner selection cards
 - `.result-container` - ASCII art display area
 - `.btn` - Gradient buttons with hover effects
+
+---
+
+### **static/fireworkEffect.js**
+Canvas-based JavaScript animation system for interactive background effects.
+
+**Features:**
+- **Multi-Canvas System**: Separate canvases for grid, warp, and fireworks
+- **Particle Physics**: Realistic firework explosions with gravity
+- **Interactive Elements**: Click-to-launch fireworks
+- **Auto-Launch**: Automatic fireworks every second
+- **Grid Animation**: Animated background grid with color fills
+- **Performance Optimized**: Efficient rendering and cleanup
+
+**Classes:**
+- `Firework` - Individual firework rockets
+- `Particle` - Explosion particles with physics
+- `GridEffect` - Background grid animation
 
 ---
 
@@ -286,16 +286,6 @@ Unit tests for core ASCII processing functions.
 
 ---
 
-### **testfiles/server/errors_test.go**
-Unit tests for error handlers.
-
-**Tests:**
-- `TestSend400` - Verifies 400 status code and error template rendering
-- `TestSend404` - Verifies 404 status code and error template rendering
-- `TestSend500` - Verifies 500 status code and error template rendering
-
----
-
 ### **testfiles/server/handlers_test.go**
 Unit tests for HTTP request handlers.
 
@@ -303,6 +293,16 @@ Unit tests for HTTP request handlers.
 - `TestHandleHome` - Tests GET `/` returns status 200 with proper template
 - `TestHandleAsciiArt_InvalidMethod` - Tests GET request to `/ascii-art` returns 400
 - `TestHandleAsciiArt_InvalidBanner` - Tests POST with invalid banner name returns 400
+
+---
+
+### **testfiles/server/errors_test.go**
+Unit tests for error handlers.
+
+**Tests:**
+- `TestSend400` - Verifies 400 status code and error template rendering
+- `TestSend404` - Verifies 404 status code and error template rendering
+- `TestSend500` - Verifies 500 status code and error template rendering
 
 ---
 
@@ -508,20 +508,6 @@ Multi-stage Docker build configuration for optimized deployment.
 
 ---
 
-### **Makefile**
-Build automation and development workflow management.
-
-**Targets:**
-- `build` - Compile binary to `bin/ascii-art-web`
-- `run` - Start development server
-- `test` - Run all unit tests with verbose output
-- `coverage` - Generate and display test coverage report
-- `check` - Format code and run linting
-- `clean` - Remove generated files
-- `all` - Run complete pre-PR check suite
-
----
-
 ### **go.mod**
 Go module definition and dependency management.
 
@@ -553,6 +539,20 @@ MIT License file defining project usage rights and restrictions.
 - Use, copy, modify, merge, publish, distribute
 - Sublicense and sell copies
 - Full commercial usage rights
+
+---
+
+### **Makefile**
+Build automation and development workflow management.
+
+**Targets:**
+- `build` - Compile binary to `bin/ascii-art-web`
+- `run` - Start development server
+- `test` - Run all unit tests with verbose output
+- `coverage` - Generate and display test coverage report
+- `check` - Format code and run linting
+- `clean` - Remove generated files
+- `all` - Run complete pre-PR check suite
 
 ---
 
