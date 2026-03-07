@@ -65,10 +65,27 @@
         <div class="result-actions">
             <button class="btn-copy" id="copyBtn">Copy to Clipboard</button>
 
-            <form action="/export" method="POST" style="display:inline;">
-                <input type="hidden" name="ascii" value="{{.Result}}">
-                <button class="btn-copy">Download as .txt</button>
-            </form>
+            <!-- Katerina added: Hover dropdown for export formats -->
+            <div class="export-dropdown">
+                <button class="btn-copy dropdown-btn">Download ▼</button>
+                <div class="dropdown-content">
+                    <form action="/export" method="POST">
+                        <input type="hidden" name="ascii" value="{{.Result}}">
+                        <input type="hidden" name="format" value="txt">
+                        <button type="submit" class="dropdown-item"> Text (.txt)</button>
+                    </form>
+                    <form action="/export" method="POST">
+                        <input type="hidden" name="ascii" value="{{.Result}}">
+                        <input type="hidden" name="format" value="html">
+                        <button type="submit" class="dropdown-item"> HTML (.html)</button>
+                    </form>
+                    <form action="/export" method="POST">
+                        <input type="hidden" name="ascii" value="{{.Result}}">
+                        <input type="hidden" name="format" value="markdown">
+                        <button type="submit" class="dropdown-item"> Markdown (.md)</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

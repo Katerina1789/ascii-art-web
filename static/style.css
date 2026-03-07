@@ -411,3 +411,48 @@ pre {
         font-size: 0.9rem;
     }
 }
+/* Katerina edited: Enhanced hover dropdown with persistent visibility */
+.export-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    min-width: 160px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.export-dropdown:hover .dropdown-content,
+.dropdown-content:hover {
+    display: block;
+}
+
+.dropdown-item {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 10px 15px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.result-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}

@@ -85,16 +85,50 @@ func ExportAsciiArt(w http.ResponseWriter, r *http.Request) {
 	}
 
 	asciiResult := r.FormValue("ascii")
+	format := r.FormValue("format")
+
 	if asciiResult == "" {
 		Send400(w, "No ASCII art to export")
 		return
 	}
 
-	data := []byte(asciiResult)
+	var data []byte
+	var contentType, filename string
 
-	w.Header().Set("Content-Type", "text/plain")
+	switch format {
+	case "html":
+		htmlContent := fmt.Sprintf(
+			`<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ASCII Art</title>
+    <style>pre { font-family: monospace; }</style>
+</head>
+<body>
+<pre>%s</pre>
+</body>
+</html>`, asciiResult)
+
+		data = []byte(htmlContent)
+		contentType = "text/html; charset=utf-8"
+		filename = "ascii-art.html"
+
+	case "markdown":
+		md := fmt.Sprintf("```\n%s\n```", asciiResult)
+		data = []byte(md)
+		contentType = "text/markdown; charset=utf-8"
+		filename = "ascii-art.md"
+
+	default: // txt
+		data = []byte(asciiResult)
+		contentType = "text/plain; charset=utf-8"
+		filename = "ascii-art.txt"
+	}
+
+	w.Header().Set("Content-Type", contentType)
 	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
-	w.Header().Set("Content-Disposition", "attachment; filename=\"ascii-art.txt\"")
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)
