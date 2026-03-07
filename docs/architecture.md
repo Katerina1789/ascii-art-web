@@ -68,6 +68,7 @@ Application entry point that initializes and starts the HTTP server.
 **Routes Registered:**
 - `http.HandleFunc("/", server.HandleHome)` - Main page
 - `http.HandleFunc("/ascii-art", server.HandleAsciiArt)` - ASCII generation
+- `http.HandleFunc("/export", server.ExportAsciiArt)` - File export
 - `http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))` - Static assets
 
 ---
@@ -183,6 +184,7 @@ HTTP request handlers for the web application.
 **Functions:**
 - `HandleHome(w, r)` - Handles GET requests to `/`; validates path is exactly `/`, parses `templates/index.html`, and executes template with nil data (empty form)
 - `HandleAsciiArt(w, r)` - Handles POST requests to `/ascii-art`; validates HTTP method is POST, extracts form values (text, banner), validates banner name is one of {standard, shadow, thinkertoy}, calls `GenerateAsciiArt()`, and re-renders `index.html` with result data
+- `ExportAsciiArt(w, r)` - Handles POST requests to `/export`; validates HTTP method is POST, extracts ASCII result and format from form, generates appropriate file content (TXT/HTML/Markdown), sets proper HTTP headers (Content-Type, Content-Length, Content-Disposition), and sends file as download
 
 **Validation Logic:**
 - Method validation: Only POST allowed for `/ascii-art`
@@ -199,6 +201,8 @@ Main page template containing the input form, result display area, and interacti
 - Radio buttons for banner selection (standard, shadow, thinkertoy) with visual previews
 - Submit button that sends POST request to `/ascii-art`
 - Conditional result display using `{{if .Result}}<pre>{{.Result}}</pre>{{end}}`
+- Export dropdown with hover functionality for multiple format downloads (TXT, HTML, Markdown)
+- Copy to clipboard button for quick text copying
 - Results displayed on same page after form submission
 - Links to CSS stylesheet and JavaScript effects
 - Canvas elements for fireworks background animation

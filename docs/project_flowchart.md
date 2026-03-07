@@ -12,6 +12,7 @@ main()
   ├─ Register HTTP routes:
   │   ├─ GET  /          → HandleHome
   │   ├─ POST /ascii-art → HandleAsciiArt
+  │   ├─ POST /export    → ExportAsciiArt
   │   └─ GET  /static/*  → FileServer (CSS, JS)
   └─ Start HTTP server on :8080
       └─ Listen for incoming requests
@@ -256,4 +257,62 @@ Test Execution (make test):
 
 Total: 14 tests, all passing
 Coverage: Available via 'make coverage'
+```
+## POST /export (File Export)
+
+```
+ExportAsciiArt(w, r)
+  ├─ Validate HTTP method == POST
+  │   └─ NO → Send400("Only POST method allowed")
+  ├─ Extract form values:
+  │   ├─ asciiResult := r.FormValue("ascii")
+  │   └─ format := r.FormValue("format")
+  ├─ Validate ASCII result not empty
+  │   └─ NO → Send400("No ASCII art to export")
+  ├─ Generate content based on format:
+  │   ├─ format == "html":
+  │   │   ├─ Wrap ASCII in HTML template
+  │   │   ├─ contentType = "text/html; charset=utf-8"
+  │   │   └─ filename = "ascii-art.html"
+  │   ├─ format == "markdown":
+  │   │   ├─ Wrap ASCII in markdown code block
+  │   │   ├─ contentType = "text/markdown; charset=utf-8"
+  │   │   └─ filename = "ascii-art.md"
+  │   └─ default (txt):
+  │       ├─ Use ASCII content as-is
+  │       ├─ contentType = "text/plain; charset=utf-8"
+  │       └─ filename = "ascii-art.txt"
+  ├─ Set HTTP headers:
+  │   ├─ Content-Type: format-specific MIME type
+  │   ├─ Content-Length: file size in bytes
+  │   └─ Content-Disposition: attachment with filename
+  └─ Write file data to response
+      └─ Browser initiates download
+```
+
+## Export Format Examples
+
+```
+TXT Format:
+  Raw ASCII art content
+  No additional formatting
+  Direct text output
+
+HTML Format:
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ASCII Art</title>
+    <style>pre { font-family: monospace; }</style>
+  </head>
+  <body>
+  <pre>[ASCII_CONTENT]</pre>
+  </body>
+  </html>
+
+Markdown Format:
+  ```
+  [ASCII_CONTENT]
+  ```
 ```
