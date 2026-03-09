@@ -1,5 +1,4 @@
 #We download the correct go version and naming this stage as builder because we are going to use it later
-# Katerina added: Changed the Go version to match the go.mod file.
 FROM golang:1.25.7 AS builder
 
 #Creating our working directory witch stores our programme 
@@ -24,7 +23,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ascii-art ./cmd/main.go
 #Installing minimal OS like alpine in order to save space (takes around ~5mb)
 FROM alpine:3.19
 
-# Katerina added: Installing certificates for HTTPS support as part of good practice since we use HTTP and the code downloads banner files from URL.
+#Installing certificates for HTTPS support as part of good practice since we use HTTP and the code downloads banner files from URL.
 RUN apk add --no-cache ca-certificates
 
 #Creating the working directory again cause we basically create a new instance of an image 

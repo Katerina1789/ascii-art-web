@@ -1,12 +1,13 @@
 package server_test
 
 import (
-	"ascii-art-web/internal/utilities/server"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+
+	"ascii-art-web/internal/utilities/server"
 )
 
 // Test: home handler should return 200 or 404
@@ -49,3 +50,5 @@ func TestHandleAsciiArt_InvalidBanner(t *testing.T) {
 		t.Fatalf("expected 400, got %d", w.Code)
 	}
 }
+
+// Test: ASCII export

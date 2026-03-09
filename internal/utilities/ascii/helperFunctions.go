@@ -2,14 +2,14 @@ package ascii
 
 import "strings"
 
-// Handle newline normalization and splitting
+// Handles newline normalization and splitting
 func SplitInputLines(input string) []string {
 	input = strings.ReplaceAll(input, "\r\n", "\n") // Windows CRLF
 	input = strings.ReplaceAll(input, "\\n", "\n")  // Literal \n
 	return strings.Split(input, "\n")
 }
 
-// Filter unsupported characters while preserving newlines
+// Filters unsupported characters while preserving newlines
 func AsciiFilter(text string) (string, []string) {
 	filtered := ""
 	var removed []string
@@ -26,7 +26,7 @@ func AsciiFilter(text string) (string, []string) {
 	return filtered, removed
 }
 
-// Render one line of ASCII art (8 rows)
+// Renders one line of ASCII art (8 rows)
 func PrintAsciiLine(line string, asciiLines []string) string {
 	var result strings.Builder
 	asciiHeight := 8
@@ -46,11 +46,11 @@ func PrintAsciiLine(line string, asciiLines []string) string {
 	return result.String()
 }
 
-// Render multiple lines with blank lines between blocks
+// Renders multiple lines with blank lines between blocks
 func RenderAscii(lines []string, asciiLines []string) string {
 	var result strings.Builder
 
-	// Remove trailing empty line from final newline
+	// Removes trailing empty line from final newline
 	if len(lines) > 0 && lines[len(lines)-1] == "" {
 		lines = lines[:len(lines)-1]
 	}
@@ -62,7 +62,7 @@ func RenderAscii(lines []string, asciiLines []string) string {
 
 		result.WriteString(PrintAsciiLine(line, asciiLines))
 
-		// Add one blank line between blocks
+		// Adds one blank line between blocks
 		if i < len(lines)-1 {
 			result.WriteString("\n")
 		}

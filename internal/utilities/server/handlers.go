@@ -1,15 +1,16 @@
 package server
 
 import (
-	"ascii-art-web/internal/utilities/ascii"
 	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
+
+	"ascii-art-web/internal/utilities/ascii"
 )
 
-// HandleHome serves the main page (GET /).
-// It validates the path, loads the index template, and renders it.
+// HandleHome serves the main page (GET /)
+// It validates the path, loads the index template, and renders it
 func HandleHome(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		Send404(w, "Page not found")
@@ -25,8 +26,8 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-// HandleAsciiArt processes ASCII art generation requests (POST /ascii-art).
-// It validates the method, reads form values, checks the banner name, generates ASCII art, and re-renders the template with the result.
+// HandleAsciiArt processes ASCII art generation requests (POST /ascii-art)
+// It validates the method, reads form values, checks the banner name, generates ASCII art, and re-renders the template with the result
 func HandleAsciiArt(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("=== Handler called ===")
 
@@ -36,18 +37,18 @@ func HandleAsciiArt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Extract form values
+	// Extracts form values
 	text := r.FormValue("text")
 	banner := r.FormValue("banner")
 	fmt.Printf("Text: %q, Banner: %q\n", text, banner)
 
-	// Validate banner selection
+	// Validates banner selection
 	if banner != "standard" && banner != "shadow" && banner != "thinkertoy" {
 		Send400(w, "Invalid banner name")
 		return
 	}
 
-	// Generate ASCII art
+	// Generates ASCII art
 	result, err := ascii.GenerateAsciiArt(text, banner)
 	if err != nil {
 		fmt.Printf("ERROR: %v\n", err)
@@ -56,7 +57,7 @@ func HandleAsciiArt(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("Success: %d bytes\n", len(result))
 
-	// Load template for displaying result
+	// Loads template for displaying result
 	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		Send404(w, "Template not found")

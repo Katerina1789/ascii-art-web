@@ -411,7 +411,7 @@ pre {
         font-size: 0.9rem;
     }
 }
-/* Katerina edited: Enhanced hover dropdown with persistent visibility */
+/* Enhanced hover dropdown with persistent visibility */
 .export-dropdown {
     position: relative;
     display: inline-block;
