@@ -245,25 +245,9 @@ The Dockerfile uses a two-stage build process:
 
 The application supports exporting generated ASCII art in multiple formats:
 
-### Supported Formats
-
 - **TXT**: Plain text format with `.txt` extension
 - **HTML**: Web-ready format with monospace styling
 - **Markdown**: Documentation format with code blocks
-
-### Usage
-
-1. Generate ASCII art using the web interface
-2. Hover over the "Download ▼" button
-3. Select desired format from dropdown menu
-4. File downloads automatically with appropriate extension
-
-### HTTP Headers
-
-Export requests include proper HTTP headers:
-- `Content-Type`: Format-specific MIME type
-- `Content-Length`: File size in bytes
-- `Content-Disposition`: Attachment with filename
 
 ## API Endpoints
 
