@@ -100,9 +100,9 @@ Content-Type: text/plain
 ```
 
 **Checklist:**
-- [x] Content-Type header is present
-- [x] Media type is appropriate
-- [x] Charset optional (not required for audit)
+- [ ] Content-Type header is present
+- [ ] Media type is appropriate
+- [ ] Charset optional (not required for audit)
 
 ---
 
@@ -119,9 +119,9 @@ Content-Length: 5
 ```
 
 **Checklist:**
-- [x] Content-Length header is present
-- [x] Size matches actual file size
-- [x] Size is in bytes
+- [ ] Content-Length header is present
+- [ ] Size matches actual file size
+- [ ] Size is in bytes
 
 ---
 
@@ -138,10 +138,10 @@ Content-Disposition: attachment; filename="ascii-art.txt"
 ```
 
 **Checklist:**
-- [x] Content-Disposition header is present
-- [x] Uses "attachment"
-- [x] Filename is specified
-- [x] Filename is descriptive
+- [ ] Content-Disposition header is present
+- [ ] Uses "attachment"
+- [ ] Filename is specified
+- [ ] Filename is descriptive
 
 ---
 
@@ -254,7 +254,7 @@ curl http://localhost:8080/export
 2. Check available export options:
    - `.txt` (plain text)
    - `.html` (HTML format)
-   - `.json` (JSON format)
+   - `.md` (Markdown format)
    - Other formats
 
 **Checklist:**
@@ -262,14 +262,6 @@ curl http://localhost:8080/export
 - [ ] Each format works correctly
 - [ ] Format selection is clear
 - [ ] Content-Type matches format
-
-**Example:**
-```bash
-# Test different formats
-curl http://localhost:8080/export?format=txt
-curl http://localhost:8080/export?format=html
-curl http://localhost:8080/export?format=json
-```
 
 ---
 
@@ -358,7 +350,6 @@ curl -X POST http://localhost:8080/export
 - Content-Disposition usage
 - File handling in Go
 - Browser download mechanisms
-- MIME types
 
 ---
 
@@ -382,29 +373,6 @@ curl -X POST http://localhost:8080/export
 - [ ] Good user experience
 - [ ] Follows web standards
 - [ ] Production-ready
-
----
-
-## Test Commands
-
-```bash
-# Start server
-go run ./cmd
-
-# Test in browser
-# 1. Open http://localhost:8080/
-# 2. Generate ASCII art
-# 3. Click export button
-# 4. Verify download
-
-# Test with curl
-curl -X POST http://localhost:8080/ascii-art -d "text=Hello&banner=standard"
-curl -I http://localhost:8080/export
-
-# Check downloaded file
-ls -l ~/Downloads/
-cat ~/Downloads/ascii-art.txt
-```
 
 ---
 
